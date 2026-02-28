@@ -1,0 +1,23 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('STAGE1') {
+            steps {
+                sh 'sleep 5'
+                echo "This is the step 1"
+            }
+        }
+        stage('STAGE2') {   // ''' for multiple linux command in single block
+            steps {                 
+                sh ''' 
+                    #!/bin/bash
+                    pwd
+                    ls -lrt
+                    sleep 5
+                '''
+                echo "This is the step 2"
+            }
+        }
+    }
+}
