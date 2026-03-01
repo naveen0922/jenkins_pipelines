@@ -5,12 +5,16 @@ pipeline {
     stages {
         stage('STAGE1') {
             steps {
-                sh 'sleep 5'
+                sh '''
+                    sleep 5
+                    echo "This is the step 1"
+                '''
                 echo "This is the step 1"
             }
         } 
-        stage('STAGE2') {   // ''' for multiple linux command in single block
-            steps {                 
+        stage('BUILD') {   // ''' for multiple linux command in single block
+            steps { 
+                echo "Building the application"                
                 sh ''' 
                     #!/bin/bash
                     pwd
