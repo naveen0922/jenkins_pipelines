@@ -15,10 +15,11 @@ pipeline {
                 echo "AWS_ACCESS_KEY: ${env.AWS_ACCESS_KEY}"
 
                 sh '''
-                    env "DOCKER_USER: ${DOCKER_USER}"
-                    env "AWS_ACCESS_KEY: ${AWS_ACCESS_KEY}"
+                    env 
                 '''
             }
         }
     }
 }
+// "DOCKER_USER: ${DOCKER_USER}"
+//                     env "AWS_ACCESS_KEY: ${AWS_ACCESS_KEY}"
