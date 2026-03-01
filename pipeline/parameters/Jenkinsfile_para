@@ -3,7 +3,7 @@ pipeline {
 
     parameters {
         string(name: 'NAME', defaultValue: 'Give name', description: 'Enter name')
-        booleanParam(name: 'SKIP_TEST', default: false, description: 'Skip testing?')
+        booleanParam(name: 'SKIP_TEST', defaultValue: false, description: 'Skip testing?')
         choice(name: 'BRANCH', choices: ['master', 'staging', 'prod'], description: 'choose the branch')
     }
 
