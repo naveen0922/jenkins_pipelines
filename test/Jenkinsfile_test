@@ -36,16 +36,16 @@ pipeline {
         } 
 
     stages {
-    stage('CHECKOUT_REPOB') {
-        steps {
-            checkout ([ $class: 'GitSCM', 
-                        branches: [[name: '*/main']], 
-                        extensions: [], 
-                        userRemoteConfigs: [[credentialsId: 'hp-git', 
-                        url: 'https://github.com/naveen0922/self.git']]])
+        stage('CHECKOUT_REPOB') {
+            steps {
+                checkout ([ $class: 'GitSCM', 
+                            branches: [[name: '*/main']], 
+                            extensions: [], 
+                            userRemoteConfigs: [[credentialsId: 'hp-git', 
+                            url: 'https://github.com/naveen0922/self.git']]])
+                }
             }
         }
-    }
 
         stage('when environment') {
             when {
