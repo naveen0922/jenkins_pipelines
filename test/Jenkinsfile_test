@@ -8,7 +8,7 @@ pipeline {
     }
     
     stages {
-        stage('CHECKOUT') {
+        stage('CHECKOUT_REPOA') {
             steps {
                 checkout ([ $class: 'GitSCM', 
                             branches: [[name: '*/main']], 
@@ -26,12 +26,26 @@ pipeline {
             steps {
                 echo "This is the step 1"
                 sh '''
+                    pwd
+                    ls -lrt
                     sleep 5
-                    exit 1
+                   
                 '''
             }
             
         } 
+
+        stages {
+        stage('CHECKOUT_REPOB') {
+            steps {
+                checkout ([ $class: 'GitSCM', 
+                            branches: [[name: '*/main']], 
+                            extensions: [], 
+                            userRemoteConfigs: [[credentialsId: 'hp-git', 
+                            url: 'https://github.com/naveen0922/self.git']]])
+            }
+        }
+    }
 
         stage('when environment') {
             when {
@@ -39,7 +53,12 @@ pipeline {
             }
             steps {
                 echo "This is the final"
-                sh 'sleep 5'
+                sh '''
+                    pwd
+                    ls -lrt
+                    sleep 5
+                   
+                '''
             }
         }
 
