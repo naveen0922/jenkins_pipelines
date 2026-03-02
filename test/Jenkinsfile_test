@@ -9,7 +9,7 @@ pipeline {
     
 
     stages {
-        stage('STAGE1 whenm branch') {
+        stage('STAGE1 when branch') {
             when {
                 branch 'main'
             }
@@ -35,11 +35,11 @@ pipeline {
 
         stage('when parameter') {
             when {
-                allOf {    // allOf is everything is true, anyOf is any one is true, not is not true
-                    branch 'main'
-                    environment name: 'CURRENT_ENV', value: 'prod'
-                    expression { params.DEPLOY == true }
-                }
+                // allOf {    // allOf is everything is true, anyOf is any one is true, not is not true
+                //     branch 'main'
+                //     environment name: 'CURRENT_ENV', value: 'prod'
+                expression { params.DEPLOY == true }
+                // }
             }
             steps {
                 echo "This is the parameter stage"
