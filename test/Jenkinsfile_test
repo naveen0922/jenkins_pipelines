@@ -23,7 +23,7 @@ pipeline {
             
         } 
 
-        stage('whenm environment') {
+        stage('when environment') {
             when {
                 environment name: 'CURRENT_ENV', value: 'prod'
             }
@@ -33,7 +33,7 @@ pipeline {
             }
         }
 
-        stage('whenm parameter') {
+        stage('when parameter') {
             when {
                 allof {    // allof is every thing is true, anyof is any one is true, not is not true
                     branch 'main'
