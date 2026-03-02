@@ -1,35 +1,49 @@
 pipeline {
     agent any
+    parameters {
+        booleanParam(name: 'DEPLOY', description: 'Want to deploy to prod')
+    }
+    environment {
+        CURRENT_ENV = 'prod'
+    }
     
 
     stages {
-        stage('STAGE1a') {
-            steps {
-                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    echo "This is the step 1"
-                    sh '''
-                        sleep 5
-                        exit 1
-                    '''
-                }
+        stage('STAGE1 whenm branch') {
+            when {
+                branch 'main'
             }
+            steps {
+                echo "This is the step 1"
+                sh '''
+                    sleep 5
+                    exit 1
+                '''
+            }
+            
         } 
 
-        stage('STAGE1b') {
+        stage('whenm environment') {
+            when {
+                environment name: 'CURRENT_ENV', value: 'prod'
+            }
             steps {
-                script {
-                    try {
-                        sh '''
-                            sleep 5
-                            exit 1
-                        '''
-                    }
-                    catch(err) {
-                        echo "Error caught: ${err}"
-                        currentBuild.result = 'SUCCESS'
-                        // ...existing code...
-                    }
+                echo "This is the final"
+                sh 'sleep 5'
+            }
+        }
+
+        stage('whenm parameter') {
+            when {
+                allof {    // allof is every thing is true, anyof is any one is true, not is not true
+                    branch 'main'
+                    environment name: 'CURRENT_ENV', value: 'prod'
+                    expression { params.DEPLOY == true }
                 }
+            }
+            steps {
+                echo "This is the parameter stage"
+                sh 'sleep 5'
             }
         }
         
