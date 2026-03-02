@@ -35,7 +35,7 @@ pipeline {
 
         stage('when parameter') {
             when {
-                allof {    // allof is every thing is true, anyof is any one is true, not is not true
+                allOf {    // allOf is everything is true, anyOf is any one is true, not is not true
                     branch 'main'
                     environment name: 'CURRENT_ENV', value: 'prod'
                     expression { params.DEPLOY == true }
