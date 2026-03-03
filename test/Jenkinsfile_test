@@ -1,24 +1,29 @@
 pipeline {
     agent any
-    parameters {
-        booleanParam(name: 'DEPLOY', description: 'Want to deploy to prod')
+
+    triggers {
+        pollSCM('H/5 * * * *')
     }
     environment {
-        CURRENT_ENV = 'prod'
+        CURRENT_ENV = 'prodaa'
     }
-    
     stages {
         stage('CHECKOUT_REPOA') {
             steps {
                 checkout ([ $class: 'GitSCM', 
                             branches: [[name: '*/main']], 
                             extensions: [], 
-                            userRemoteConfigs: [[credentialsId: 'hp-git', 
-                            url: 'https://github.com/naveen0922/self.git']]])
+                            userRemoteConfigs: [[
+                                credentialsId: 'hp-git', 
+                                url: 'https://github.com/naveen0922/self.git'
+                            ]]
+                        ])
+                sh '''
+                    echo GIT_BRANCH: ${GIT_BRANCH}
+                    echo BRANCH_NAME: ${BRANCH_NAME}
+                '''
             }
         }
-    }
-    stages {
         stage('STAGE1 when branch') {
             when {
                 branch 'main'
@@ -32,72 +37,8 @@ pipeline {
                    
                 '''
             }
-            
-        } 
-
-    stages {
-        stage('CHECKOUT_REPOB') {
-            steps {
-                checkout ([ $class: 'GitSCM', 
-                            branches: [[name: '*/main']], 
-                            extensions: [], 
-                            userRemoteConfigs: [[credentialsId: 'hp-git', 
-                            url: 'https://github.com/naveen0922/self.git']]])
-                }
-            }
         }
-
-        stage('when environment') {
-            when {
-                environment name: 'CURRENT_ENV', value: 'prod'
-            }
-            steps {
-                echo "This is the final"
-                sh '''
-                    pwd
-                    ls -lrt
-                    sleep 5
-                   
-                '''
-            }
-        }
-
-        stage('when parameter') {
-            when {
-                // allOf {    // allOf is everything is true, anyOf is any one is true, not is not true
-                //     branch 'main'
-                //     environment name: 'CURRENT_ENV', value: 'prod'
-                expression { params.DEPLOY == true }
-                // }
-            }
-            steps {
-                echo "This is the parameter stage"
-                sh 'sleep 5'
-            }
-        }
-        
-        stage('PARALLEL TESTING') {
-            parallel {
-                stage('WINDOWS TESTING') {
-                    steps {
-                        echo "This is the windows testing"
-                        sh 'sleep 5'
-                    }
-                }
-                stage('mac') {
-                    steps {
-                        echo "This is the mac testing"
-                        sh 'sleep 5'
-                    }
-
-                }
-            }
-        }
-        stage('FINAL STAGE') {
-            steps {
-                echo "This is the final stage"
-            }
-        } 
-    
     }
 }
+
+    
