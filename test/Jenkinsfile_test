@@ -30,6 +30,7 @@ pipeline {
                     echo GIT_BRANCH: ${GIT_BRANCH}
                     echo BRANCH_NAME: ${BRANCH_NAME}
                 '''
+                echo"\033[33m This is the colored output in console \033[0m"
             }
         }
         stage('STAGE1 when branch') {
