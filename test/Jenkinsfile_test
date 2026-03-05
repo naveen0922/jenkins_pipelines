@@ -6,7 +6,6 @@ pipeline {
     }
 
     options {
-        ansiColor('xterm')  // for colored output in console
         disableConcurrentBuilds(abortPrevious: true)
         buildDiscarder(logRotator(numToKeepStr: '2'))
         disableResume()
@@ -18,6 +17,7 @@ pipeline {
     stages {
         stage('CHECKOUT_REPOA') {
             steps {
+                    ansiColor('xterm')  // for colored output in console
                 checkout ([ $class: 'GitSCM', 
                             branches: [[name: '*/main']], 
                             extensions: [], 
