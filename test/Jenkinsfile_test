@@ -6,7 +6,7 @@ pipeline {
     }
 
     options {
-        ansiColor('xterm')  // for colored output in console
+        // ansiColor('xterm')  // for colored output in console
         disableConcurrentBuilds(abortPrevious: true)
         buildDiscarder(logRotator(numToKeepStr: '2'))
         disableResume()
@@ -44,6 +44,7 @@ pipeline {
                     sleep 5
                    
                 '''
+                echo"\033[33m This is the colored output in console \033[0m"
             }
         }
     }
