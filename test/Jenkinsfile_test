@@ -1,9 +1,17 @@
 pipeline {
     agent any
 
-    // triggers {
-    //     pollSCM('H/5 * * * *')
-    // }
+    triggers {
+        cron('H/5 * * * *')
+    }
+
+    options {
+        ansiColor('xterm')  // for colored output in console
+        disableConcurrentBuilds(abortPrevious: true)
+        buildDiscarder(logRotator(numToKeepStr: '2'))
+        disableResume()
+        timeout(time: 2, unit: 'MINUTES')
+    }
     environment {
         CURRENT_ENV = 'prodaa'
     }
